@@ -1,0 +1,116 @@
+import os
+import time
+import base64
+import cv2
+import numpy as np
+import mediapipe as mp
+from mediapipe.tasks import python
+from mediapipe.tasks.python import vision
+#gelen görüntü base64->gerçek byte verisine çevirmek için  base64 kutuphanesı kullanılıyor
+#vision yüz tespiti için gerekli bir modul
+
+FACE_DETECTOR_MODEL = os.path.join("modeller/blaze_face_short_range.tflite")
+base_options_detector = python.BaseOptions(model_asset_path=FACE_DETECTOR_MODEL)
+
+detector_options = vision.FaceDetectorOptions(
+    base_options=base_options_detector, #model secimi yapıldı
+    running_mode=vision.RunningMode.IMAGE #görüntü ile analiz yapılacak bunları belırlıyorum
+)
+detector = vision.FaceDetector.create_from_options(detector_options) #yuz tespıt nesnesı olusturuluyor artık yuz verınce yüz arayacak
+
+STATE = {
+    "uygunsuz_baslama_zamani": None
+}
+
+
+def baslangic_pos_ayarla(image):
+    try:
+        image_data = image.split(",")[1]
+        image_bytes = base64.b64decode(image_data)
+
+        np_arr = np.frombuffer(image_bytes, np.uint8)
+        frame = cv2.imdecode(np_arr, cv2.IMREAD_COLOR) #artık göruntu frame olarak olsutu
+
+        if frame is None:
+            return {"sonuc": "Goruntu cozulemedi"}
+
+        frame_height, frame_width, _ = frame.shape
+        rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+
+        mp_image = mp.Image(
+            image_format=mp.ImageFormat.SRGB,
+            data=rgb_frame
+        )
+
+        detection_result = detector.detect(mp_image) #yuz tespıt modelı calıstırılıyor varsa konumu nerde onu buluyor
+
+        if detection_result.detections:
+            first_detection = detection_result.detections[0] #bulunan ılk yuzu algılıyor
+            bounding_box = first_detection.bounding_box
+            x = bounding_box.origin_x
+            y = bounding_box.origin_y
+            width = bounding_box.width
+            height = bounding_box.height
+
+            yuz_merkez_x = x + width / 2
+            yuz_merkez_y = y + height / 2 #yuz kutusunun merkezını hesapladım
+
+            merkez_x = frame_width / 2
+            merkez_y = frame_height / 2  #ana ekran merkezını hesapladım
+
+            tolerans_x = frame_width * 0.18
+            tolerans_y = frame_height * 0.18  #yuz merkezden ne kadar uzaklasacak onun toleransını ayarladım
+
+            yuz_alani = width * height
+            ekran_alani = frame_width * frame_height
+            yuz_orani = yuz_alani / ekran_alani
+
+            konum_uyarisi = ""
+            mesafe_uyarisi = ""
+
+            if yuz_merkez_x < merkez_x - tolerans_x:
+                konum_uyarisi = "Biraz saga gec"
+            elif yuz_merkez_x > merkez_x + tolerans_x:
+                konum_uyarisi = "Biraz sola gec"
+            elif yuz_merkez_y < merkez_y - tolerans_y:
+                konum_uyarisi = "Biraz asagi in"
+            elif yuz_merkez_y > merkez_y + tolerans_y:
+                konum_uyarisi = "Biraz yukari cik"
+
+            if yuz_orani < 0.08:
+                mesafe_uyarisi = "Biraz yaklas"
+            elif yuz_orani > 0.35:
+                mesafe_uyarisi = "Biraz uzaklas"
+
+            if konum_uyarisi and mesafe_uyarisi:
+                anlik_sonuc = konum_uyarisi + " | " + mesafe_uyarisi
+            elif konum_uyarisi:
+                anlik_sonuc = konum_uyarisi
+            elif mesafe_uyarisi:
+                anlik_sonuc = mesafe_uyarisi
+            else:
+                anlik_sonuc = "Yuz uygun konumda"
+
+            if anlik_sonuc == "Yuz uygun konumda":
+                STATE["uygunsuz_baslama_zamani"] = None
+                return {"sonuc": "Yuz uygun konumda"}
+
+            if STATE["uygunsuz_baslama_zamani"] is None:
+                STATE["uygunsuz_baslama_zamani"] = time.time()
+
+            gecen_sure = time.time() - STATE["uygunsuz_baslama_zamani"] #uygunsuzluğun ne kadar süredir devam ettiği hesaplanıyo.
+
+            if gecen_sure >= 1:
+                return {"sonuc": anlik_sonuc} #anlık sonuc dedıgım sey uyarı mesajı oluyo
+            else:
+                return {"sonuc": "Yuz uygun konumda"}
+
+        else:
+            STATE["uygunsuz_baslama_zamani"] = None
+            return {"sonuc": "Yuz kamerada gorunmuyor"}
+
+    except Exception as e:
+        return {
+            "sonuc": "Hata",
+            "error": str(e)
+        }
