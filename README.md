@@ -4,6 +4,60 @@ Odak Asistanı, öğrencilerin ders çalışma sürecindeki dikkat ve odak durum
 
 Bu sistem, özellikle ders çalışan öğrencilerin verimli çalışma alışkanlıkları kazanmasına yardımcı olmak amacıyla hazırlanmıştır. Kullanıcılar çalışma modu seçebilir, ders bazlı oturum başlatabilir, çalışma süresini takip edebilir ve oturum sonunda performanslarını raporlar üzerinden inceleyebilir.
 
+## Proje Görselleri
+
+Aşağıda projenin farklı bölümlerine ait ekran görüntüleri yer almaktadır.
+
+<details>
+<summary>Proje ekran görüntülerini görüntülemek için tıklayın</summary>
+
+<br>
+
+<img src="screenshots/g%C3%B6rsel_2026-06-27_101504286.png" width="700">
+
+<img src="screenshots/g%C3%B6rsel_2026-06-27_101518346.png" width="700">
+
+<img src="screenshots/g%C3%B6rsel_2026-06-27_101523938.png" width="700">
+
+<img src="screenshots/g%C3%B6rsel_2026-06-27_101529733.png" width="700">
+
+<img src="screenshots/g%C3%B6rsel_2026-06-27_101535871.png" width="700">
+
+<img src="screenshots/g%C3%B6rsel_2026-06-27_101544353.png" width="700">
+
+<img src="screenshots/g%C3%B6rsel_2026-06-27_101551362.png" width="700">
+
+<img src="screenshots/g%C3%B6rsel_2026-06-27_101601814.png" width="700">
+
+<img src="screenshots/g%C3%B6rsel_2026-06-27_101609269.png" width="700">
+
+<img src="screenshots/g%C3%B6rsel_2026-06-27_101617102.png" width="700">
+
+<img src="screenshots/g%C3%B6rsel_2026-06-27_101626204.png" width="700">
+
+<img src="screenshots/g%C3%B6rsel_2026-06-27_101638414.png" width="700">
+
+<img src="screenshots/g%C3%B6rsel_2026-06-27_101644591.png" width="700">
+
+<img src="screenshots/g%C3%B6rsel_2026-06-27_101650925.png" width="700">
+
+<img src="screenshots/g%C3%B6rsel_2026-06-27_101702321.png" width="700">
+
+<img src="screenshots/g%C3%B6rsel_2026-06-27_101708739.png" width="700">
+
+<img src="screenshots/g%C3%B6rsel_2026-06-27_101716068.png" width="700">
+
+<img src="screenshots/g%C3%B6rsel_2026-06-27_101735685.png" width="700">
+
+<img src="screenshots/g%C3%B6rsel_2026-06-27_101746142.png" width="700">
+
+<img src="screenshots/g%C3%B6rsel_2026-06-27_101756474.png" width="700">
+
+<img src="screenshots/g%C3%B6rsel_2026-06-27_101802474.png" width="700">
+
+</details>
+
+
 ## Projenin Amacı
 
 Bu projenin amacı, görüntü işleme teknikleri kullanarak öğrencinin çalışma sırasında ne kadar odaklı kaldığını analiz etmektir. Sistem, kullanıcının kamera karşısındaki durumunu takip ederek odak kaybına işaret edebilecek davranışları tespit eder.
