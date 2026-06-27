@@ -9,7 +9,6 @@ Bu sistem, özellikle ders çalışan öğrencilerin verimli çalışma alışka
 Aşağıda projenin farklı bölümlerine ait ekran görüntüleri yer almaktadır.
 
 <details>
-<summary>Proje ekran görüntülerini görüntülemek için tıklayın</summary>
 
 <br>
 
