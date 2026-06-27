@@ -3,7 +3,7 @@
 Odak Asistanı, öğrencilerin ders çalışma sürecindeki dikkat ve odak durumlarını analiz etmek için geliştirilmiş web tabanlı bir çalışma takip sistemidir. Proje; kamera görüntüsü üzerinden yüz, göz ve baş hareketlerini analiz eder, çalışma oturumlarını takip eder, odak dışı davranışları kaydeder ve oturum sonunda kullanıcıya odak skoru ile kişiselleştirilmiş öneriler sunar.
 
 Bu sistem, özellikle ders çalışan öğrencilerin verimli çalışma alışkanlıkları kazanmasına yardımcı olmak amacıyla hazırlanmıştır. Kullanıcılar çalışma modu seçebilir, ders bazlı oturum başlatabilir, çalışma süresini takip edebilir ve oturum sonunda performanslarını raporlar üzerinden inceleyebilir.
-
+Kodları gizlilik nedeniyle şuanda paylaşamıyorum 
 
 ## Proje Görselleri
 
